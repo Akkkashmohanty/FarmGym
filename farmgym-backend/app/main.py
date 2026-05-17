@@ -24,4 +24,3 @@ def root():
         "message": "FarmGym Backend Running Successfully"
     }
 
-    
