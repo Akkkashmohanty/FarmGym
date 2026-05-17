@@ -19,7 +19,6 @@ class UserCreate(BaseModel):
         min_length=8,
         max_length=50
     )
-
     @field_validator("password")
     @classmethod
     def validate_password(cls, value):
