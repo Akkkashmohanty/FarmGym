@@ -76,3 +76,21 @@ def get_admin_user(
         )
 
     return current_user
+
+
+def get_approved_user(
+    current_user: User = Depends(
+        get_current_user
+    )
+):
+
+    if current_user.status != "approved":
+
+        raise HTTPException(
+            status_code=403,
+            detail="Your account is not approved yet"
+        )
+
+    return current_user
+
+    
