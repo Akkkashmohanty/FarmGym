@@ -19,41 +19,32 @@ class UserCreate(BaseModel):
         min_length=8,
         max_length=50
     )
+
     @field_validator("password")
     @classmethod
     def validate_password(cls, value):
 
         if not re.search(r"[A-Z]", value):
             raise ValueError(
-                "Password must contain at least one uppercase letter"
+                "Password must contain uppercase letter"
             )
 
         if not re.search(r"[a-z]", value):
             raise ValueError(
-                "Password must contain at least one lowercase letter"
+                "Password must contain lowercase letter"
             )
 
         if not re.search(r"\d", value):
             raise ValueError(
-                "Password must contain at least one number"
+                "Password must contain number"
             )
 
-        if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", value):
+        if not re.search(
+            r"[!@#$%^&*(),.?\":{}|<>]",
+            value
+        ):
             raise ValueError(
-                "Password must contain at least one special character"
-            )
-
-        return value
-
-    @field_validator("email")
-    @classmethod
-    def validate_email_domain(cls, value):
-
-        domain = value.split("@")[-1]
-
-        if "." not in domain:
-            raise ValueError(
-                "Invalid email domain"
+                "Password must contain special character"
             )
 
         return value
@@ -69,7 +60,13 @@ class UserResponse(BaseModel):
 
     role: str
 
+    requested_role: str | None
+
+    status: str
+
     is_active: bool
+
+    is_admin: bool
 
     class Config:
         from_attributes = True

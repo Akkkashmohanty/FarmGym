@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 
 from app.models.user_model import User
+
 from app.schemas.user_schema import UserCreate
 
 from app.core.security import (
@@ -29,7 +30,9 @@ def create_user(
     new_user = User(
         full_name=user.full_name,
         email=user.email,
-        password=hashed_password
+        password=hashed_password,
+        role="pending",
+        status="pending"
     )
 
     db.add(new_user)
@@ -86,5 +89,8 @@ def login_user(
 
     return {
         "access_token": token,
-        "token_type": "bearer"
+        "token_type": "bearer",
+        "role": user.role,
+        "status": user.status,
+        "is_admin": user.is_admin
     }
