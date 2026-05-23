@@ -82,10 +82,13 @@ def login_user(
         return None
 
     token = create_access_token(
-        data={
-            "sub": user.email
-        }
-    )
+    data={
+        "sub": user.email,
+        "role": user.role,
+        "status": user.status,
+        "is_admin": user.is_admin
+    }
+)
 
     return {
         "access_token": token,
