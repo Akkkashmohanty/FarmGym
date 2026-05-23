@@ -24,6 +24,9 @@ from app.routes.onboarding_routes import (
     router as onboarding_router
 )
 
+from app.routes.admin_routes import (
+    router as admin_router
+)
 
 app = FastAPI(
     title="FarmGym API",
@@ -51,6 +54,10 @@ app.include_router(user_router)
 app.include_router(user_router)
 
 app.include_router(onboarding_router)
+
+app.include_router(onboarding_router)
+
+app.include_router(admin_router)
 
 @app.get("/")
 def root():
