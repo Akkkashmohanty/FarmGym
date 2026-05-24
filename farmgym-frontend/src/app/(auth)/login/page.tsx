@@ -38,18 +38,14 @@ export default function LoginPage() {
         response.data.access_token
       );
 
-      toast.success(
-        "Login successful"
-      );
+      alert("Login successful")
 
       router.push("/dashboard");
 
     } catch (error: any) {
 
-      toast.error(
-        error.response?.data?.detail ||
-        "Login failed"
-      );
+      alert("Login failed")
+      
     }
   };
 

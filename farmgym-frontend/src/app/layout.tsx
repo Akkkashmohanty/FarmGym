@@ -1,7 +1,5 @@
 import "./globals.css";
 
-import { Toaster } from "@/components/ui/sonner";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -14,8 +12,6 @@ export default function RootLayout({
       <body>
 
         {children}
-
-        <Toaster />
 
       </body>
 
