@@ -1,33 +1,57 @@
 "use client";
 
-import { useEffect } from "react";
+import DashboardLayout from "@/components/layout/DashboardLayout";
 
-import { useRouter } from "next/navigation";
+import useRoleRedirect from "@/hooks/useRoleRedirect";
 
 export default function DashboardPage() {
 
-  const router = useRouter();
-
-  useEffect(() => {
-
-    const token = localStorage.getItem(
-      "token"
-    );
-
-    if (!token) {
-      router.push("/login");
-    }
-
-  }, []);
+  useRoleRedirect();
 
   return (
 
-    <div className="flex items-center justify-center h-screen">
+    <DashboardLayout>
 
-      <h1 className="text-5xl font-bold">
-        Dashboard
-      </h1>
+      <div className="grid grid-cols-3 gap-6">
 
-    </div>
+        <div className="bg-white p-6 rounded-2xl shadow">
+
+          <h2 className="text-xl font-bold">
+            Farmer Status
+          </h2>
+
+          <p className="mt-3 text-gray-600">
+            Onboarding Pending
+          </p>
+
+        </div>
+
+        <div className="bg-white p-6 rounded-2xl shadow">
+
+          <h2 className="text-xl font-bold">
+            Calories Burned
+          </h2>
+
+          <p className="mt-3 text-gray-600">
+            0 Calories
+          </p>
+
+        </div>
+
+        <div className="bg-white p-6 rounded-2xl shadow">
+
+          <h2 className="text-xl font-bold">
+            Active Crops
+          </h2>
+
+          <p className="mt-3 text-gray-600">
+            No crops added
+          </p>
+
+        </div>
+
+      </div>
+
+    </DashboardLayout>
   );
 }
