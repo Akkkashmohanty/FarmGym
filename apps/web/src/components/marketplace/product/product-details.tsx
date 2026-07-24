@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import Image from "next/image"
 
 import { ShoppingCart } from "lucide-react"
@@ -34,6 +35,7 @@ export default function ProductDetails({
   } = useProducts()
 
   const { addToCart } = useCartStore()
+  const router = useRouter()
 
   const handleAddToCart = () => {
     if (!product) return
@@ -47,6 +49,13 @@ export default function ProductDetails({
           "Manage quantities in your shopping cart.",
       },
     )
+  }
+
+  const handleBuyNow = () => {
+    if (!product) return
+
+    addToCart(product)
+    router.push("/checkout")
   }
 
   if (isLoading) {
@@ -138,6 +147,7 @@ export default function ProductDetails({
             </button>
 
             <button
+              onClick={handleBuyNow}
               className="rounded-2xl border border-border px-8 py-3 font-semibold transition hover:bg-muted"
             >
               Buy Now

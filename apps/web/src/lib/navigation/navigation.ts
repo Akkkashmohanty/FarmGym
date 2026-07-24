@@ -11,6 +11,9 @@ import {
     Dumbbell,
     Settings,
     Shield,
+    Store,
+    Package,
+    PackagePlus,
     LucideIcon,
 } from "lucide-react"
 
@@ -62,6 +65,56 @@ export const navigationItems: NavigationItem[] = [
         roles: [
             "USER",
             "FARMER",
+            "SELLER",
+            "ADMIN",
+        ],
+        section: "platform",
+    },
+
+    {
+        label: "My Orders",
+        href: "/orders",
+        icon: Package,
+        permission: "orders",
+        roles: [
+            "USER",
+            "FARMER",
+            "SELLER",
+            "ADMIN",
+        ],
+        section: "platform",
+    },
+
+    {
+        label: "Seller Dashboard",
+        href: "/seller/dashboard",
+        icon: Store,
+        permission: "seller-dashboard",
+        roles: [
+            "SELLER",
+            "ADMIN",
+        ],
+        section: "platform",
+    },
+
+    {
+        label: "Seller Orders",
+        href: "/seller/orders",
+        icon: Package,
+        permission: "seller-orders",
+        roles: [
+            "SELLER",
+            "ADMIN",
+        ],
+        section: "platform",
+    },
+
+    {
+        label: "Upload Product",
+        href: "/seller/uploads",
+        icon: PackagePlus,
+        permission: "seller-upload",
+        roles: [
             "SELLER",
             "ADMIN",
         ],

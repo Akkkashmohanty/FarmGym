@@ -8,7 +8,13 @@ import {
   useCreateOrder,
 } from "@/features/marketplace/hooks/use-orders"
 
-export default function PaymentButton() {
+interface PaymentButtonProps {
+  shippingAddress: string
+}
+
+export default function PaymentButton({
+  shippingAddress,
+}: PaymentButtonProps) {
   const { clearCart, cart } = useCartStore()
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -26,11 +32,20 @@ export default function PaymentButton() {
         return
       }
 
+      if (!shippingAddress.trim()) {
+        toast.error(
+          "Please enter a shipping address.",
+        )
+        return
+      }
+
       try {
 
         setLoading(true)
 
         await createOrder.mutateAsync({
+          shipping_address: shippingAddress,
+
           items: cart.map(
             (item) => ({
               product_id:

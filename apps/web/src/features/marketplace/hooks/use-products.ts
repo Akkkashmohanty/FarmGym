@@ -1,104 +1,144 @@
 "use client"
 
 import {
-    useMutation,
-    useQuery,
-    useQueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
 } from "@tanstack/react-query"
 
-import { productApi } from "../api/product.api"
+import {
+  productApi,
+  ProductQueryParams,
+} from "../api/product.api"
 
-export function useProducts() {
-    return useQuery({
-        queryKey: ["products"],
-        queryFn: productApi.getProducts,
-    })
+export function useProducts(
+  params?: ProductQueryParams,
+) {
+  return useQuery({
+    queryKey: [
+      "products",
+      params,
+    ],
+
+    queryFn: () =>
+      productApi.getProducts(
+        params,
+      ),
+  })
 }
 
 export function useProduct(
-    id: number,
+  id: number,
 ) {
-    return useQuery({
-        queryKey: ["product", id],
-        queryFn: () =>
-            productApi.getProduct(id),
-        enabled: !!id,
-    })
+  return useQuery({
+    queryKey: [
+      "product",
+      id,
+    ],
+
+    queryFn: () =>
+      productApi.getProduct(id),
+
+    enabled: !!id,
+  })
 }
 
 export function useMyProducts() {
-    return useQuery({
-        queryKey: ["my-products"],
-        queryFn: productApi.getMyProducts,
-    })
+  return useQuery({
+    queryKey: [
+      "my-products",
+    ],
+
+    queryFn:
+      productApi.getMyProducts,
+  })
 }
 
 export function useCreateProduct() {
-    const queryClient = useQueryClient()
+  const queryClient =
+    useQueryClient()
 
-    return useMutation({
-        mutationFn: productApi.createProduct,
+  return useMutation({
+    mutationFn:
+      productApi.createProduct,
 
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ["products"],
-            })
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [
+          "products",
+        ],
+      })
 
-            queryClient.invalidateQueries({
-                queryKey: ["my-products"],
-            })
-        },
-    })
+      queryClient.invalidateQueries({
+        queryKey: [
+          "my-products",
+        ],
+      })
+    },
+  })
 }
 
 export function useUpdateProduct() {
-    const queryClient = useQueryClient()
+  const queryClient =
+    useQueryClient()
 
-    return useMutation({
-        mutationFn: ({
-            id,
-            payload,
-        }: {
-            id: number
-            payload: Parameters<
-                typeof productApi.updateProduct
-            >[1]
-        }) =>
-            productApi.updateProduct(
-                id,
-                payload,
-            ),
+  return useMutation({
+    mutationFn: ({
+      id,
+      payload,
+    }: {
+      id: number
+      payload: Parameters<
+        typeof productApi.updateProduct
+      >[1]
+    }) =>
+      productApi.updateProduct(
+        id,
+        payload,
+      ),
 
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ["products"],
-            })
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [
+          "products",
+        ],
+      })
 
-            queryClient.invalidateQueries({
-                queryKey: ["my-products"],
-            })
+      queryClient.invalidateQueries({
+        queryKey: [
+          "my-products",
+        ],
+      })
 
-            queryClient.invalidateQueries({
-                queryKey: ["product"],
-            })
-        },
-    })
+      queryClient.invalidateQueries({
+        queryKey: [
+          "product",
+        ],
+      })
+    },
+  })
 }
 
 export function useDeleteProduct() {
-    const queryClient = useQueryClient()
+  const queryClient =
+    useQueryClient()
 
-    return useMutation({
-        mutationFn: productApi.deleteProduct,
+  return useMutation({
+    mutationFn:
+      productApi.deleteProduct,
 
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ["products"],
-            })
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [
+          "products",
+        ],
+      })
 
-            queryClient.invalidateQueries({
-                queryKey: ["my-products"],
-            })
-        },
-    })
+      queryClient.invalidateQueries({
+        queryKey: [
+          "my-products",
+        ],
+      })
+    },
+  })
 }

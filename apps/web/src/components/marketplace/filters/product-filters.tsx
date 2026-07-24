@@ -1,68 +1,129 @@
 "use client"
 
-import { useState } from "react"
-import { Search, SlidersHorizontal, ChevronDown } from "lucide-react"
+import {
+  Search,
+  SlidersHorizontal,
+} from "lucide-react"
 
-const categories = ["All", "Seeds", "Soil", "Tools", "Fertilizers", "Pots"]
-const sortOptions = ["Best Sellers", "Price: Low to High", "Price: High to Low", "Highest Rating"]
+const categories = [
+  "All",
+  "Seeds",
+  "Soil",
+  "Tools",
+  "Fertilizers",
+  "Pots",
+]
 
-export default function ProductFilters() {
-  const [activeCategory, setActiveCategory] = useState("All")
-  const [search, setSearch] = useState("")
-  const [sortBy, setSortBy] = useState("Best Sellers")
+const sortOptions = [
+  "Newest",
+  "Price: Low to High",
+  "Price: High to Low",
+]
 
+interface ProductFiltersProps {
+  search: string
+  category: string
+  sortBy: string
+
+  onSearchChange: (
+    value: string,
+  ) => void
+
+  onCategoryChange: (
+    value: string,
+  ) => void
+
+  onSortChange: (
+    value: string,
+  ) => void
+}
+
+export default function ProductFilters({
+  search,
+  category,
+  sortBy,
+  onSearchChange,
+  onCategoryChange,
+  onSortChange,
+}: ProductFiltersProps) {
   return (
-    <div className="rounded-3xl border border-border bg-card p-6 shadow-sm space-y-4">
-      {/* Search and Sort row */}
-      <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-        {/* Search */}
+    <div className="space-y-4 rounded-3xl border border-border bg-card p-6 shadow-sm">
+
+      <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+
         <div className="relative w-full sm:max-w-md">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+
+          <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+
           <input
             type="text"
-            placeholder="Search crop seeds, tools, organic fertilizers..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full h-11 pl-10 pr-4 rounded-xl border border-border bg-background text-sm focus:outline-none focus:ring-1 focus:ring-green-600"
+            onChange={(e) =>
+              onSearchChange(
+                e.target.value,
+              )
+            }
+            placeholder="Search crop seeds, tools, organic fertilizers..."
+            className="h-11 w-full rounded-xl border border-border bg-background pl-10 pr-4 text-sm focus:outline-none focus:ring-1 focus:ring-green-600"
           />
+
         </div>
 
-        {/* Sorting Dropdown */}
-        <div className="flex w-full sm:w-auto items-center gap-2 border border-border bg-background rounded-xl h-11 px-3 cursor-pointer">
+        <div className="flex h-11 w-full items-center gap-2 rounded-xl border border-border bg-background px-3 sm:w-auto">
+
           <SlidersHorizontal className="h-4 w-4 text-muted-foreground" />
+
           <select
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="h-full border-0 bg-transparent text-xs font-semibold focus:outline-none cursor-pointer pr-6 appearance-none flex-1 sm:flex-none"
+            onChange={(e) =>
+              onSortChange(
+                e.target.value,
+              )
+            }
+            className="h-full flex-1 cursor-pointer appearance-none border-0 bg-transparent pr-6 text-xs font-semibold focus:outline-none"
           >
-            {sortOptions.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt}
-              </option>
-            ))}
+            {sortOptions.map(
+              (option) => (
+                <option
+                  key={option}
+                  value={option}
+                >
+                  {option}
+                </option>
+              ),
+            )}
           </select>
+
         </div>
+
       </div>
 
-      {/* Category Pills */}
       <div className="flex flex-wrap gap-2 pt-2">
+
         {categories.map((cat) => {
-          const isActive = activeCategory === cat
+
+          const isActive =
+            category === cat
+
           return (
             <button
               key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`text-xs px-4 py-2 rounded-xl border font-bold transition-all ${
+              onClick={() =>
+                onCategoryChange(cat)
+              }
+              className={`rounded-xl border px-4 py-2 text-xs font-bold transition-all ${
                 isActive
-                  ? "bg-green-600 border-green-600 text-white shadow-sm"
-                  : "bg-background border-border/80 text-muted-foreground hover:text-foreground hover:bg-muted"
+                  ? "border-green-600 bg-green-600 text-white shadow-sm"
+                  : "border-border/80 bg-background text-muted-foreground hover:bg-muted hover:text-foreground"
               }`}
             >
               {cat}
             </button>
           )
         })}
+
       </div>
+
     </div>
   )
 }

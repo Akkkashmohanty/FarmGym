@@ -2,6 +2,8 @@
 
 import { useState } from "react"
 
+import Image from "next/image"
+
 import {
   UploadCloud,
   Loader2,
@@ -12,9 +14,13 @@ import { toast } from "sonner"
 import {
   useCreateProduct,
 } from "@/features/marketplace/hooks/use-products"
+import {
+  useUploadImage,
+} from "@/features/marketplace/hooks/use-upload"
 
 export default function ProductUploadForm() {
   const createProduct = useCreateProduct()
+  const uploadImage = useUploadImage()
 
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
@@ -24,6 +30,23 @@ export default function ProductUploadForm() {
   const [price, setPrice] = useState("")
   const [stock, setStock] = useState("")
   const [imageUrl, setImageUrl] = useState("")
+  const [preview, setPreview] = useState("")
+
+  async function handleImageUpload(file: File) {
+    try {
+      const localPreview = URL.createObjectURL(file)
+
+      setPreview(localPreview)
+
+      const response = await uploadImage.mutateAsync(file)
+
+      setImageUrl(response.image_url)
+
+      toast.success("Image uploaded successfully.")
+    } catch {
+      toast.error("Image upload failed.")
+    }
+  }
 
   async function handleSubmit(
     e: React.FormEvent,
@@ -70,6 +93,7 @@ export default function ProductUploadForm() {
       setPrice("")
       setStock("")
       setImageUrl("")
+      setPreview("")
     } catch (error: any) {
       toast.error(
         error?.response?.data?.detail ??
@@ -166,14 +190,42 @@ export default function ProductUploadForm() {
           />
         </div>
 
-        <input
-          placeholder="Image URL"
-          value={imageUrl}
-          onChange={(e) =>
-            setImageUrl(e.target.value)
-          }
-          className="w-full rounded-xl border p-3"
-        />
+        <div className="space-y-4">
+          <label className="block cursor-pointer rounded-xl border-2 border-dashed p-8 text-center hover:border-green-600">
+            <UploadCloud className="mx-auto mb-3 h-10 w-10" />
+
+            <p className="font-semibold">
+              Click to Upload Product Image
+            </p>
+
+            <input
+              hidden
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0]
+
+                if (file) {
+                  handleImageUpload(file)
+                }
+              }}
+            />
+          </label>
+
+          {uploadImage.isPending && <p>Uploading...</p>}
+
+          {preview && (
+            <div className="relative h-60 w-full overflow-hidden rounded-xl border">
+              <Image
+                src={preview}
+                alt="Preview"
+                fill
+                className="object-cover"
+                unoptimized
+              />
+            </div>
+          )}
+        </div>
 
         <button
           disabled={createProduct.isPending}

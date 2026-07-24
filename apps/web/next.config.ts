@@ -7,10 +7,12 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "images.unsplash.com",
+        hostname: "farmgym-products.s3.ap-south-1.amazonaws.com",
       },
     ],
   },
 }
 
 export default nextConfig
+
+
