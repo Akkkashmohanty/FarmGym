@@ -1,5 +1,10 @@
+interface NGO {
+  name: string
+  city: string
+}
+
 interface Props {
-  ngo: any
+  ngo: NGO
 }
 
 export default function NGOCard({

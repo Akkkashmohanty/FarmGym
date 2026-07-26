@@ -1,6 +1,6 @@
 "use client"
 
-import { Star, ThumbsUp, Award, Check } from "lucide-react"
+import { Star, ThumbsUp, Check } from "lucide-react"
 
 const reviewList = [
   {

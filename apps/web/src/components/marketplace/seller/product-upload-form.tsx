@@ -94,11 +94,13 @@ export default function ProductUploadForm() {
       setStock("")
       setImageUrl("")
       setPreview("")
-    } catch (error: any) {
-      toast.error(
-        error?.response?.data?.detail ??
-        "Unable to create product.",
-      )
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Unable to create product."
+
+      toast.error(message)
     }
   }
 

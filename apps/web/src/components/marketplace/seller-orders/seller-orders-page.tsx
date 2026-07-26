@@ -17,6 +17,21 @@ const STATUS_FLOW = [
   "Delivered",
 ]
 
+interface OrderItem {
+  id: number
+  product_id: number
+  quantity: number
+  price: number
+}
+
+interface SellerOrder {
+  id: number
+  created_at: string
+  status: string
+  total_amount: number
+  items: OrderItem[]
+}
+
 function StatusBadge({
   status,
 }: {
@@ -53,7 +68,7 @@ export default function SellerOrdersPage() {
     useUpdateOrderStatus()
 
   async function nextStatus(
-    order: any,
+    order: SellerOrder,
   ) {
     const current =
       STATUS_FLOW.indexOf(order.status)
@@ -128,7 +143,7 @@ export default function SellerOrdersPage() {
 
         <div className="space-y-6">
 
-          {orders.map((order: any) => (
+          {orders.map((order: SellerOrder) => (
 
             <div
               key={order.id}
@@ -160,7 +175,7 @@ export default function SellerOrdersPage() {
               <div className="mt-6 space-y-3">
 
                 {order.items.map(
-                  (item: any) => (
+                  (item: OrderItem) => (
 
                     <div
                       key={item.id}

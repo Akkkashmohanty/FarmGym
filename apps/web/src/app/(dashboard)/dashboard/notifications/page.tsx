@@ -85,7 +85,7 @@ export default function NotificationsPage() {
                         </h2>
 
                         <p className="mt-2 text-muted-foreground">
-                            You're all caught up.
+                            You&apos;re all caught up.
                         </p>
 
                     </div>

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Search, Filter, Compass, Sprout, Globe, Check } from "lucide-react"
+import { Search } from "lucide-react"
 
 const categories = ["All", "Terrace Farming", "Balcony Setup", "Organic Pest Control", "Hydroponics"]
 const states = ["All States", "Karnataka", "Tamil Nadu", "Maharashtra", "Delhi"]

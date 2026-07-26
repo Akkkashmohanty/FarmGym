@@ -85,6 +85,7 @@ export interface CropLifecycleItem {
   expected_harvest_date: string
   status: string
   progress: number
+  remaining_days: number
 }
 
 export interface CropRecommendation {
@@ -287,13 +288,24 @@ export const plannerApi = {
   // Timeline
   // -----------------------------
 
-  async getHarvestTimeline() {
+  async getHarvestTimeline(): Promise<CropLifecycleItem[]> {
     const response =
-      await api.get(
+      await api.get<CropLifecycleItem[]>(
         "/farm-plans/timeline",
       )
 
-    return response.data
+    const now = Date.now()
+
+    return response.data.map((crop) => ({
+      ...crop,
+      remaining_days: Math.max(
+        0,
+        Math.ceil(
+          (new Date(crop.expected_harvest_date).getTime() - now) /
+            (1000 * 60 * 60 * 24),
+        ),
+      ),
+    }))
   },
 
   // -----------------------------

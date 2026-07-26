@@ -1,6 +1,6 @@
 "use client"
 
-import { Droplet, Info, BarChart2, TrendingDown, Check } from "lucide-react"
+import { Info, BarChart2, TrendingDown, Check } from "lucide-react"
 
 export default function WaterUsageCard() {
   const tips = [

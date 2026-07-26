@@ -2,12 +2,22 @@
 
 import { useFarmPlans } from "../hooks/use-planner"
 
+interface Crop {
+  id: number
+  crop_name: string
+  status: string
+}
+
+interface FarmPlan {
+  crops?: Crop[]
+}
+
 export default function CropHealthCard() {
   const { data: farmPlans, isLoading } = useFarmPlans()
 
   const crops =
     farmPlans?.flatMap(
-      (plan: any) => plan.crops ?? [],
+      (plan: FarmPlan) => plan.crops ?? [],
     ) ?? []
 
   if (isLoading) {
@@ -36,7 +46,7 @@ export default function CropHealthCard() {
             No crops added yet.
           </p>
         ) : (
-          crops.map((crop: any) => (
+          crops.map((crop: Crop) => (
             <div
               key={crop.id}
               className="flex items-center justify-between"

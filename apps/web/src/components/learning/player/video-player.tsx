@@ -1,15 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { Play, Pause, RotateCcw, Volume2, Maximize, Sprout } from "lucide-react"
+import { Play, RotateCcw, Volume2, Maximize, Sprout } from "lucide-react"
 
-interface Props {
-  url: string
-}
-
-export default function VideoPlayer({ url }: Props) {
+export default function VideoPlayer() {
   const [isPlaying, setIsPlaying] = useState(false)
-  const [progress, setProgress] = useState(35) // Mock initial progress
+  const [progress] = useState(35) // Mock initial progress
 
   const togglePlay = () => {
     setIsPlaying(!isPlaying)

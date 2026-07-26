@@ -19,17 +19,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-type Recommendation = {
-  id: number
-  crop: string
-  category: string
-  difficulty: string
-  harvest_days: number
-  water_requirement: string
-  sunlight_requirement: string
-  recommendation_score: number
-}
-
 const seasons = ["Spring", "Summer", "Monsoon", "Autumn", "Winter"]
 
 const sunlightOptions = [

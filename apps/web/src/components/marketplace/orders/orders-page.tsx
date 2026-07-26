@@ -10,6 +10,21 @@ import {
   useOrders,
 } from "@/features/marketplace/hooks/use-orders"
 
+interface OrderItem {
+  id: number
+  product_id: number
+  quantity: number
+  price: number
+}
+
+interface Order {
+  id: number
+  created_at: string
+  status: string
+  total_amount: number
+  items: OrderItem[]
+}
+
 function StatusBadge({
   status,
 }: {
@@ -112,7 +127,7 @@ export default function OrdersPage() {
 
         <div className="space-y-6">
 
-          {orders.map((order: any) => (
+          {orders.map((order: Order) => (
 
             <div
               key={order.id}
@@ -144,7 +159,7 @@ export default function OrdersPage() {
               <div className="mt-6 space-y-3">
 
                 {order.items.map(
-                  (item: any) => (
+                  (item: OrderItem) => (
 
                     <div
                       key={item.id}

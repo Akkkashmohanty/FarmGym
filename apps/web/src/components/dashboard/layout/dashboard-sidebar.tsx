@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { LogOut } from "lucide-react"
 
 import { useAuthStore } from "@/store/auth.store"
+import { UserRole } from "@/types/auth.types"
 import { getNavigationByRole } from "@/lib/navigation/navigation"
 
 export default function DashboardSidebar() {
@@ -18,7 +19,7 @@ export default function DashboardSidebar() {
   } = useAuthStore()
 
   const navigation = getNavigationByRole(
-    (role ?? "USER") as any,
+    (role ?? "USER") as UserRole,
   )
 
   const platformItems = navigation.filter(

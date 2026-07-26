@@ -5,7 +5,6 @@ import {
   Sparkles,
   Loader2,
   MapPin,
-  Sun,
   Droplets,
   Trees,
   Leaf,

@@ -1,5 +1,10 @@
+interface Challenge {
+  title: string
+  participants: number
+}
+
 interface Props {
-  challenge: any
+  challenge: Challenge
 }
 
 export default function ChallengeCard({

@@ -33,13 +33,12 @@ export default function PlantingCalendar() {
     isLoading,
   } = useHarvestTimeline()
 
-  const timeline = (data ?? []) as TimelineItem[]
-
   const [currentMonth, setCurrentMonth] = useState(
     new Date(),
   )
 
   const events = useMemo<CalendarEvent[]>(() => {
+    const timeline = (data ?? []) as TimelineItem[]
     const items: CalendarEvent[] = []
 
     timeline.forEach((crop) => {
@@ -67,7 +66,7 @@ export default function PlantingCalendar() {
         a.date.getTime() -
         b.date.getTime(),
     )
-  }, [timeline])
+  }, [data])
 
   const [selectedDate, setSelectedDate] =
     useState<Date | null>(null)

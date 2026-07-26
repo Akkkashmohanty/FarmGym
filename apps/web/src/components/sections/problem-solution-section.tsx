@@ -1,4 +1,4 @@
-import { ShieldAlert, CheckCircle, Flame, Sprout, Heart, Compass } from "lucide-react"
+import { ShieldAlert, Flame, Sprout, Heart, Compass } from "lucide-react"
 import Container from "@/components/shared/layout/container"
 
 export default function ProblemSolutionSection() {

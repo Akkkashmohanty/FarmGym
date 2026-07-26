@@ -1,6 +1,12 @@
 "use client"
 
-import { Hourglass, Calendar, Sprout, ShoppingBag, Info } from "lucide-react"
+import {
+  Hourglass,
+  Calendar,
+  Sprout,
+  ShoppingBag,
+  Info,
+} from "lucide-react"
 import { useHarvestTimeline } from "@/features/planner/hooks/use-planner"
 
 export default function HarvestTimeline() {
@@ -46,13 +52,7 @@ export default function HarvestTimeline() {
             <p className="text-muted-foreground">No crops available yet.</p>
           ) : (
             crops.map((crop) => {
-              const remainingDays = Math.max(
-                0,
-                Math.ceil(
-                  (new Date(crop.expected_harvest_date).getTime() - Date.now()) /
-                    (1000 * 60 * 60 * 24),
-                ),
-              )
+              const remainingDays = crop.remaining_days
 
               return (
                 <div

@@ -7,12 +7,12 @@ interface Props {
 }
 
 export default function VideoPlayer({
-  url,
+  url: _url,
 }: Props) {
   return (
     <div className="overflow-hidden rounded-3xl">
       <ReactPlayer
-        url={url}
+        url={_url}
         width="100%"
         height="100%"
         controls

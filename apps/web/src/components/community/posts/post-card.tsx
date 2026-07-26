@@ -7,8 +7,16 @@ import {
   MessageCircle,
 } from "lucide-react"
 
+interface Post {
+  author: string
+  content: string
+  image?: string | null
+  likes: number
+  comments: number
+}
+
 interface Props {
-  post: any
+  post: Post
 }
 
 export default function PostCard({

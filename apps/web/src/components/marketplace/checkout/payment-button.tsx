@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Lock, CreditCard, CheckCircle } from "lucide-react"
+import { Lock, CheckCircle } from "lucide-react"
 import { toast } from "sonner"
 import { useCartStore } from "@/features/marketplace/store/cart.store"
 import {
@@ -65,13 +65,14 @@ export default function PaymentButton({
           "Order placed successfully!",
         )
 
-      } catch (error: any) {
+      } catch (error: unknown) {
 
-        toast.error(
-          error?.response?.data
-            ?.detail ??
-          "Unable to place order.",
-        )
+        const message =
+          error instanceof Error
+            ? error.message
+            : "Unable to place order."
+
+        toast.error(message)
 
       } finally {
 

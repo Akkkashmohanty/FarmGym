@@ -8,7 +8,6 @@ import {
   Info,
   Droplets,
   CalendarDays,
-  MapPin,
 } from "lucide-react"
 
 import { useFarmPlans } from "@/features/planner/hooks/use-planner"
@@ -40,18 +39,18 @@ export default function BalconyPlanner() {
     isLoading,
   } = useFarmPlans()
 
-  const farmPlans = (data ?? []) as FarmPlan[]
+  const allCrops = useMemo(() => {
+    const farmPlans = (data ?? []) as FarmPlan[]
 
-  const allCrops = useMemo(
-    () =>
-      farmPlans.flatMap((plan) =>
-        plan.crops.map((crop) => ({
-          ...crop,
-          plan,
-        })),
-      ),
-    [farmPlans],
-  )
+    return farmPlans.flatMap((plan) =>
+      plan.crops.map((crop) => ({
+        ...crop,
+        plan,
+      })),
+    )
+  }, [data])
+
+  const farmPlans = (data ?? []) as FarmPlan[]
 
   const [selectedCropId, setSelectedCropId] =
     useState<number | null>(null)
