@@ -38,104 +38,178 @@ function PlannerContent() {
   } = useDashboardSummary()
 
   return (
-    <main className="min-h-screen bg-muted/30 p-6">
-      <div className="mx-auto max-w-7xl space-y-6">
+    <main className="min-h-screen bg-gradient-to-b from-emerald-50/40 via-background to-background p-6">
+      <div className="mx-auto max-w-7xl space-y-10">
 
-        {/* Header */}
+        {/* ================= HERO ================= */}
 
-        <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
+        <section className="relative overflow-hidden rounded-3xl border bg-gradient-to-br from-emerald-700 via-emerald-600 to-green-500 p-8 text-white shadow-2xl">
 
-          <div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.18),transparent_35%)]" />
 
-            <h1 className="text-4xl font-bold tracking-tight">
-              🌱 AI Farm Planner
-            </h1>
+          <div className="relative flex flex-col gap-8 xl:flex-row xl:items-center xl:justify-between">
 
-            <p className="mt-2 text-muted-foreground">
-              Plan your crops, monitor progress,
-              manage watering schedules and receive
-              intelligent seasonal recommendations.
-            </p>
+            <div className="max-w-3xl">
+
+              <div className="mb-5 flex flex-wrap gap-2">
+
+                <span className="rounded-full bg-white/15 px-4 py-1 text-xs font-semibold backdrop-blur">
+                  🌱 AI Powered
+                </span>
+
+                <span className="rounded-full bg-white/15 px-4 py-1 text-xs font-semibold backdrop-blur">
+                  📅 Seasonal Planning
+                </span>
+
+                <span className="rounded-full bg-white/15 px-4 py-1 text-xs font-semibold backdrop-blur">
+                  🌦 Live Weather
+                </span>
+
+              </div>
+
+              <h1 className="text-5xl font-black tracking-tight">
+                AI Farm Planner
+              </h1>
+
+              <p className="mt-5 max-w-2xl text-lg leading-8 text-emerald-50">
+                Create intelligent farm plans, monitor crop progress,
+                organize watering schedules and receive AI-powered
+                recommendations designed for urban farming.
+              </p>
+
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+
+              <div className="rounded-2xl bg-white/10 p-5 backdrop-blur">
+
+                <p className="text-sm text-emerald-100">
+                  Active Crops
+                </p>
+
+                <h2 className="mt-2 text-4xl font-bold">
+                  {isLoading ? "--" : dashboard?.active_crops ?? 0}
+                </h2>
+
+              </div>
+
+              <div className="rounded-2xl bg-white/10 p-5 backdrop-blur">
+
+                <p className="text-sm text-emerald-100">
+                  Water Today
+                </p>
+
+                <h2 className="mt-2 text-4xl font-bold">
+                  {isLoading ? "--" : dashboard?.water_today ?? 0}
+                </h2>
+
+              </div>
+
+              <div className="rounded-2xl bg-white/10 p-5 backdrop-blur">
+
+                <p className="text-sm text-emerald-100">
+                  Harvest Soon
+                </p>
+
+                <h2 className="mt-2 text-4xl font-bold">
+                  {isLoading ? "--" : dashboard?.harvest_soon ?? 0}
+                </h2>
+
+              </div>
+
+              <div className="rounded-2xl bg-white/10 p-5 backdrop-blur">
+
+                <p className="text-sm text-emerald-100">
+                  Planner Tasks
+                </p>
+
+                <h2 className="mt-2 text-4xl font-bold">
+                  {isLoading ? "--" : dashboard?.planner_tasks ?? 0}
+                </h2>
+
+              </div>
+
+            </div>
 
           </div>
 
-        </div>
+        </section>
 
-        {/* Summary Cards */}
+        {/* ================= KPI CARDS ================= */}
 
         <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
 
-          <Card>
+          <Card className="rounded-2xl shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
 
-            <CardHeader className="flex flex-row items-center justify-between">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
 
-              <CardTitle className="text-base">
+              <CardTitle className="text-sm font-medium">
                 Active Crops
               </CardTitle>
 
-              <Sprout className="h-5 w-5" />
+              <Sprout className="h-5 w-5 text-emerald-600" />
 
             </CardHeader>
 
             <CardContent>
 
-              <p className="text-3xl font-bold">
+              <div className="text-4xl font-bold">
                 {isLoading ? "--" : dashboard?.active_crops ?? 0}
-              </p>
+              </div>
 
-              <p className="text-sm text-muted-foreground">
-                Currently growing
+              <p className="mt-2 text-sm text-muted-foreground">
+                Currently growing in your garden
               </p>
 
             </CardContent>
 
           </Card>
 
-          <Card>
+          <Card className="rounded-2xl shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
 
-            <CardHeader className="flex flex-row items-center justify-between">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
 
-              <CardTitle className="text-base">
+              <CardTitle className="text-sm font-medium">
                 Water Today
               </CardTitle>
 
-              <Droplets className="h-5 w-5" />
+              <Droplets className="h-5 w-5 text-sky-600" />
 
             </CardHeader>
 
             <CardContent>
 
-              <p className="text-3xl font-bold">
+              <div className="text-4xl font-bold">
                 {isLoading ? "--" : dashboard?.water_today ?? 0}
-              </p>
+              </div>
 
-              <p className="text-sm text-muted-foreground">
-                Plants scheduled
+              <p className="mt-2 text-sm text-muted-foreground">
+                Plants scheduled today
               </p>
 
             </CardContent>
 
           </Card>
 
-          <Card>
+          <Card className="rounded-2xl shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
 
-            <CardHeader className="flex flex-row items-center justify-between">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
 
-              <CardTitle className="text-base">
+              <CardTitle className="text-sm font-medium">
                 Harvest Soon
               </CardTitle>
 
-              <Leaf className="h-5 w-5" />
+              <Leaf className="h-5 w-5 text-green-600" />
 
             </CardHeader>
 
             <CardContent>
 
-              <p className="text-3xl font-bold">
+              <div className="text-4xl font-bold">
                 {isLoading ? "--" : dashboard?.harvest_soon ?? 0}
-              </p>
+              </div>
 
-              <p className="text-sm text-muted-foreground">
+              <p className="mt-2 text-sm text-muted-foreground">
                 Ready within 7 days
               </p>
 
@@ -143,25 +217,25 @@ function PlannerContent() {
 
           </Card>
 
-          <Card>
+          <Card className="rounded-2xl shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
 
-            <CardHeader className="flex flex-row items-center justify-between">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
 
-              <CardTitle className="text-base">
+              <CardTitle className="text-sm font-medium">
                 Planner Tasks
               </CardTitle>
 
-              <CalendarDays className="h-5 w-5" />
+              <CalendarDays className="h-5 w-5 text-orange-600" />
 
             </CardHeader>
 
             <CardContent>
 
-              <p className="text-3xl font-bold">
+              <div className="text-4xl font-bold">
                 {isLoading ? "--" : dashboard?.planner_tasks ?? 0}
-              </p>
+              </div>
 
-              <p className="text-sm text-muted-foreground">
+              <p className="mt-2 text-sm text-muted-foreground">
                 Scheduled this month
               </p>
 
@@ -171,55 +245,138 @@ function PlannerContent() {
 
         </section>
 
-        {/* Weather + Calendar */}
+        {/* ================= OVERVIEW ================= */}
 
-        <section className="grid gap-6 xl:grid-cols-3">
+        <section className="space-y-6">
 
-          <div className="xl:col-span-2">
-            <PlantingCalendar />
+          <div>
+
+            <h2 className="text-2xl font-bold tracking-tight">
+              Overview
+            </h2>
+
+            <p className="text-muted-foreground">
+              Monitor seasonal conditions and upcoming planting activities.
+            </p>
+
           </div>
 
-          <WeatherWidget />
+          <div className="grid gap-6 xl:grid-cols-3">
+
+            <div className="xl:col-span-2">
+              <PlantingCalendar />
+            </div>
+
+            <WeatherWidget />
+
+          </div>
 
         </section>
 
-        {/* Reminder + Water Schedule + Harvest */}
+        {/* PART 2 STARTS HERE */}
 
-        <section className="grid gap-6 xl:grid-cols-3">
+                {/* ================= PLANNING ================= */}
 
-          <ReminderList />
+        <section className="space-y-6">
 
-          <WateringSchedule />
+          <div>
 
-          <HarvestTimeline />
+            <h2 className="text-2xl font-bold tracking-tight">
+              Planning
+            </h2>
+
+            <p className="text-muted-foreground">
+              Generate AI-powered crop plans and receive personalized
+              recommendations tailored to your growing conditions.
+            </p>
+
+          </div>
+
+          <div className="rounded-3xl border bg-card p-6 shadow-sm">
+            <FarmPlanGenerator />
+          </div>
+
+          <div className="rounded-3xl border bg-card p-6 shadow-sm">
+            <AIRecommendations />
+          </div>
 
         </section>
 
-        {/* AI Recommendations */}
+        {/* ================= OPERATIONS ================= */}
 
-        <section>
+        <section className="space-y-6">
 
-          <AIRecommendations />
+          <div>
+
+            <h2 className="text-2xl font-bold tracking-tight">
+              Operations
+            </h2>
+
+            <p className="text-muted-foreground">
+              Manage your daily gardening workflow and upcoming harvests.
+            </p>
+
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-3">
+
+            <div className="rounded-3xl border bg-card shadow-sm">
+              <ReminderList />
+            </div>
+
+            <div className="rounded-3xl border bg-card shadow-sm">
+              <WateringSchedule />
+            </div>
+
+            <div className="rounded-3xl border bg-card shadow-sm">
+              <HarvestTimeline />
+            </div>
+
+          </div>
 
         </section>
 
-        {/* Planner Analytics */}
+        {/* ================= INSIGHTS ================= */}
 
-        <section className="grid gap-6 xl:grid-cols-3">
+        <section className="space-y-6">
 
-          <BalconyPlanner />
+          <div>
 
-          <FarmPlanGenerator />
+            <h2 className="text-2xl font-bold tracking-tight">
+              Insights
+            </h2>
 
-          <CropLifecycleCard />
+            <p className="text-muted-foreground">
+              Understand crop health, sustainability metrics and optimize
+              your growing strategy.
+            </p>
 
-          <CropHealthCard />
+          </div>
 
-          <SustainabilityCard />
+          <div className="grid gap-6 xl:grid-cols-2">
+
+            <div className="rounded-3xl border bg-card shadow-sm">
+              <BalconyPlanner />
+            </div>
+
+            <div className="rounded-3xl border bg-card shadow-sm">
+              <CropLifecycleCard />
+            </div>
+
+            <div className="rounded-3xl border bg-card shadow-sm">
+              <CropHealthCard />
+            </div>
+
+            <div className="rounded-3xl border bg-card shadow-sm">
+              <SustainabilityCard />
+            </div>
+
+          </div>
 
         </section>
 
       </div>
+
     </main>
   )
 }

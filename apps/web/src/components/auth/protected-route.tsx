@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode, useEffect } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
 import { useAuthStore } from "@/store/auth.store"
@@ -25,7 +25,12 @@ export default function ProtectedRoute({
     role,
   } = useAuthStore()
 
-  const hydrated = useAuthStore.persist.hasHydrated()
+  // Prevent SSR hydration issues
+  const [hydrated, setHydrated] = useState(false)
+
+  useEffect(() => {
+    setHydrated(true)
+  }, [])
 
   useEffect(() => {
     if (!hydrated) return
