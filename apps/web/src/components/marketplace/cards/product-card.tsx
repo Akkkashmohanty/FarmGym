@@ -20,15 +20,22 @@ export default function ProductCard({
   const { addToCart } = useCartStore()
 
   const handleAddToCart = () => {
-    addToCart(product)
+    console.log("1. Click")
 
-    toast.success(
-      `${product.name} added to cart!`,
-      {
-        description:
-          "Manage quantities in your shopping cart.",
-      },
-    )
+    try {
+      console.log("2. addToCart:", addToCart)
+      console.log("3. product:", product)
+
+      addToCart(product)
+
+      console.log("4. addToCart completed")
+
+      toast.success("SUCCESS")
+
+      console.log("5. toast completed")
+    } catch (e) {
+      console.error("ERROR:", e)
+    }
   }
 
   return (

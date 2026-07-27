@@ -30,7 +30,7 @@ export default function CartItem({ item }: Props) {
               item.image_url ??
               "/images/product-placeholder.png"
             }
-            alt={item.name}
+            alt={item.name || "Product image"}
             fill
             sizes="80px"
             className="object-cover"
