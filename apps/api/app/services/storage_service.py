@@ -3,6 +3,7 @@ from pathlib import Path
 
 import boto3
 from botocore.exceptions import ClientError
+from fastapi import UploadFile
 
 from app.core.config import settings
 
@@ -38,11 +39,54 @@ class StorageService:
             f"{filename}"
         )
 
-    def delete_image(self, key: str):
+    def upload_community_image(
+        self,
+        file: UploadFile,
+    ):
+        extension = Path(file.filename).suffix.lower()
+
+        filename = (
+            f"community/{uuid.uuid4()}{extension}"
+        )
+
+        self.client.upload_fileobj(
+            file.file,
+            self.bucket,
+            filename,
+            ExtraArgs={
+                "ContentType": file.content_type,
+            },
+        )
+
+        return (
+            f"https://{self.bucket}.s3."
+            f"{settings.AWS_REGION}.amazonaws.com/"
+            f"{filename}"
+        )
+
+    def delete_image(
+        self,
+        image_url: str,
+    ):
+
+        if not image_url:
+            return
+
+        prefix = (
+            f"https://{self.bucket}.s3."
+            f"{settings.AWS_REGION}.amazonaws.com/"
+        )
+
+        key = image_url.replace(
+            prefix,
+            "",
+        )
+
         try:
             self.client.delete_object(
                 Bucket=self.bucket,
                 Key=key,
             )
+
         except ClientError:
             pass

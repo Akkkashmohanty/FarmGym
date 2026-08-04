@@ -1,13 +1,24 @@
 export interface Video {
-  id: string
+  id: number
+
+  creator_id: number
+
   title: string
-  thumbnail: string
-  videoUrl: string
-  creator: string
-  state: string
-  language: string
+  description: string
+
+  video_url: string
+  thumbnail_url?: string | null
+
+  category?: string | null
+
+  duration_seconds: number
+
   views: number
-  likes: number
-  createdAt: string
-  category: string
+  likes_count: number
+  comments_count: number
+
+  is_published: boolean
+
+  created_at: string
+  updated_at: string
 }

@@ -18,6 +18,19 @@ from app.models.crop import Crop
 from app.models.crop_season import CropSeason
 from app.models.crop_task import CropTask
 
+from app.models.community import (
+    CommunityPost,
+    CommunityComment,
+    CommunityLike,
+    CommunityChallenge,
+    CommunityChallengeParticipant,
+)
+
+from app.models.admin import (
+    AdminAnnouncement,
+    AdminReport,
+)
+
 __all__ = [
     "User",
     "Task",
@@ -34,4 +47,10 @@ __all__ = [
     "CropSeason",
     "CropTask",
     "UserFarmActivity",
+
+    "CommunityPost",
+    "CommunityComment",
+    "CommunityLike",
+    "CommunityChallenge",
+    "CommunityChallengeParticipant",
 ]

@@ -10,9 +10,10 @@ export function useVideos() {
   })
 }
 
-export function useVideo(videoId: string) {
+export function useVideo(videoId: number) {
   return useQuery({
     queryKey: ["video", videoId],
     queryFn: () => videoApi.getVideo(videoId),
+    enabled: !!videoId,
   })
 }

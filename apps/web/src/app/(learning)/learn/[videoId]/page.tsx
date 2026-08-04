@@ -1,9 +1,11 @@
-import { videos } from "@/features/learning/mock/videos.mock"
+import { notFound } from "next/navigation"
 
 import VideoPlayer from "@/components/learning/player/video-player"
 import VideoActions from "@/components/learning/player/video-actions"
 import CommentsSection from "@/components/learning/comments/comments-section"
-import VideoCard from "@/components/learning/cards/video-card"
+import VideoCard from "@/features/learning/cards/video-card"
+
+import { videoApi } from "@/features/learning/api/video.api"
 
 interface Props {
   params: Promise<{
@@ -16,19 +18,26 @@ export default async function VideoPage({
 }: Props) {
   const { videoId } = await params
 
-  const video = videos.find(
-    (item) => item.id === videoId,
-  )
+  const id = Number(videoId)
+
+  if (Number.isNaN(id)) {
+    notFound()
+  }
+
+  const [video, videos] = await Promise.all([
+    videoApi.getVideo(id),
+    videoApi.getVideos(),
+  ])
 
   if (!video) {
-    return null
+    notFound()
   }
 
   return (
     <main className="min-h-screen p-4 md:p-8">
       <div className="mx-auto grid max-w-7xl gap-8 xl:grid-cols-3">
         <div className="xl:col-span-2">
-          <VideoPlayer url={video.videoUrl} />
+          <VideoPlayer url={video.video_url} />
 
           <h1 className="mt-6 text-3xl font-bold">
             {video.title}
@@ -46,12 +55,14 @@ export default async function VideoPage({
             Recommended Videos
           </h3>
 
-          {videos.map((item) => (
-            <VideoCard
-              key={item.id}
-              video={item}
-            />
-          ))}
+          {videos
+            .filter((item) => item.id !== video.id)
+            .map((item) => (
+              <VideoCard
+                key={item.id}
+                video={item}
+              />
+            ))}
         </div>
       </div>
     </main>

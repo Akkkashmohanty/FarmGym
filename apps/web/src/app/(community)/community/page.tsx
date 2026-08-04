@@ -1,3 +1,5 @@
+"use client"
+
 import CommunityFeed from "@/components/community/feed/community-feed"
 
 import ChallengeCard from "@/components/community/challenges/challenge-card"
@@ -8,9 +10,14 @@ import AchievementBadges from "@/components/community/badges/achievement-badges"
 
 import PhotoUpload from "@/components/community/uploads/photo-upload"
 
-import { challenges } from "@/features/community/mock/community.mock"
+import { useChallenges } from "@/features/community/hooks/use-community"
 
 export default function CommunityPage() {
+  const {
+    data: challenges,
+    isLoading,
+  } = useChallenges()
+
   return (
     <main className="min-h-screen bg-muted/30 p-4 md:p-8">
       <div className="mx-auto max-w-7xl">
@@ -24,12 +31,13 @@ export default function CommunityPage() {
           </div>
 
           <div className="space-y-8">
-            {challenges.map((challenge) => (
-              <ChallengeCard
-                key={challenge.id}
-                challenge={challenge}
-              />
-            ))}
+            {!isLoading &&
+              challenges?.map((challenge) => (
+                <ChallengeCard
+                  key={challenge.id}
+                  challenge={challenge}
+                />
+              ))}
 
             <LeaderboardTable />
 

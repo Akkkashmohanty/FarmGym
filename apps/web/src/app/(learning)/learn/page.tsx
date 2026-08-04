@@ -1,9 +1,16 @@
-import { videos } from "@/features/learning/mock/videos.mock"
+"use client"
 
 import VideoCard from "@/components/learning/cards/video-card"
 import VideoFilters from "@/components/learning/filters/video-filters"
 
+import { useVideos } from "@/features/learning/hooks/use-videos"
+
 export default function LearnPage() {
+  const {
+    data: videos,
+    isLoading,
+  } = useVideos()
+
   return (
     <main className="min-h-screen p-4 md:p-8">
       <div className="mx-auto max-w-7xl">
@@ -19,14 +26,20 @@ export default function LearnPage() {
           <VideoFilters />
         </div>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
-          {videos.map((video) => (
-            <VideoCard
-              key={video.id}
-              video={video}
-            />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="mt-10 text-muted-foreground">
+            Loading...
+          </div>
+        ) : (
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+            {videos?.map((video) => (
+              <VideoCard
+                key={video.id}
+                video={video}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </main>
   )

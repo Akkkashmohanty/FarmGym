@@ -13,9 +13,13 @@ import {
   useLikePost,
   useUnlikePost,
 } from "@/features/community/hooks/use-community"
+
 import { CommunityPost } from "@/features/community/types/community.types"
 
+import { useAuthStore } from "@/store/auth.store"
+
 import CommentsDialog from "../comments/comments-dialog"
+import PostActions from "./post-actions"
 
 interface Props {
   post: CommunityPost
@@ -26,8 +30,16 @@ export default function PostCard({
 }: Props) {
   const [commentsOpen, setCommentsOpen] =
     useState(false)
+
   const like = useLikePost()
   const unlike = useUnlikePost()
+
+  const user = useAuthStore(
+    (state) => state.user,
+  )
+
+  const isOwner =
+    user?.id === post.user_id
 
   async function handleLike() {
     if (post.is_liked) {
@@ -39,18 +51,29 @@ export default function PostCard({
 
   return (
     <div className="rounded-3xl border bg-card p-6">
-      <div className="flex items-center gap-4">
-        <div className="h-12 w-12 rounded-full bg-muted" />
 
-        <div>
-          <h3 className="font-semibold">
-            {post.user.full_name}
-          </h3>
+      <div className="flex items-start justify-between">
 
-          <p className="text-sm text-muted-foreground">
-            {new Date(post.created_at).toLocaleDateString()}
-          </p>
+        <div className="flex items-center gap-4">
+          <div className="h-12 w-12 rounded-full bg-muted" />
+
+          <div>
+            <h3 className="font-semibold">
+              {post.user.full_name}
+            </h3>
+
+            <p className="text-sm text-muted-foreground">
+              {new Date(
+                post.created_at,
+              ).toLocaleDateString()}
+            </p>
+          </div>
         </div>
+
+        {isOwner && (
+          <PostActions post={post} />
+        )}
+
       </div>
 
       <h4 className="mt-5 text-xl font-semibold">
@@ -73,6 +96,7 @@ export default function PostCard({
       )}
 
       <div className="mt-6 flex items-center gap-6">
+
         <button
           onClick={handleLike}
           disabled={
@@ -102,6 +126,7 @@ export default function PostCard({
 
           {post.comments_count}
         </button>
+
       </div>
 
       <CommentsDialog
@@ -109,6 +134,7 @@ export default function PostCard({
         open={commentsOpen}
         onOpenChange={setCommentsOpen}
       />
+
     </div>
   )
 }

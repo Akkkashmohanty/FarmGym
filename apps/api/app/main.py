@@ -61,6 +61,17 @@ from app.api.v1.upload_routes import (
     router as upload_router,
 )
 
+from app.routes.community_routes import (
+    router as community_router,
+)
+
+from app.api.v1.video_routes import (
+    router as video_router,
+)
+
+from app.api.v1.admin_routes import (
+    router as admin_router,
+)
 
 app = FastAPI(
     title="FarmGym API",
@@ -169,6 +180,21 @@ app.include_router(
 
 app.include_router(
     upload_router,
+    prefix="/api/v1",
+)
+
+app.include_router(
+    community_router,
+    prefix="/api/v1",
+)
+
+app.include_router(
+    video_router,
+    prefix="/api/v1",
+)
+
+app.include_router(
+    admin_router,
     prefix="/api/v1",
 )
 

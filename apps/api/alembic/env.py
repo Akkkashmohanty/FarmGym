@@ -28,6 +28,8 @@ import app.models.crop
 import app.models.crop_season
 import app.models.crop_task
 
+import app.models.community
+
 
 config = context.config
 

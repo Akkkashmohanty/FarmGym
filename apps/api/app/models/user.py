@@ -93,6 +93,27 @@ class User(Base):
         cascade="all, delete-orphan",
     )
 
+    community_posts = relationship(
+        "CommunityPost",
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )
+
+    community_comments = relationship(
+        "CommunityComment",
+        cascade="all, delete-orphan",
+    )
+
+    community_likes = relationship(
+        "CommunityLike",
+        cascade="all, delete-orphan",
+    )
+
+    community_challenges = relationship(
+        "CommunityChallengeParticipant",
+        cascade="all, delete-orphan",
+    )
+
     farm_activity_logs = relationship(
         "UserFarmActivity",
         back_populates="user",
