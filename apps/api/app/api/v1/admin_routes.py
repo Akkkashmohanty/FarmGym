@@ -14,6 +14,10 @@ from app.repositories.admin_repository import (
     AdminRepository,
 )
 
+from app.repositories.admin_user_repository import (
+    AdminUserRepository,
+)
+
 from app.schemas.admin import (
     AdminAnnouncementCreate,
     AdminAnnouncementResponse,
@@ -21,8 +25,17 @@ from app.schemas.admin import (
     AdminReportResponse,
 )
 
+from app.schemas.admin_user import (
+    AdminUserResponse,
+    UpdateUserRoleRequest,
+)
+
 from app.services.admin_service import (
     AdminService,
+)
+
+from app.services.admin_user_service import (
+    AdminUserService,
 )
 
 router = APIRouter(
@@ -37,6 +50,14 @@ def get_service(
     repository = AdminRepository(db)
 
     return AdminService(repository)
+
+
+def get_user_service(
+    db: Session = Depends(get_db),
+):
+    repository = AdminUserRepository(db)
+
+    return AdminUserService(repository)
 
 
 def require_admin(
@@ -118,4 +139,54 @@ def resolve_report(
 ):
     return service.resolve_report(
         report_id,
+    )
+
+
+# ---------------------------------------
+# USER MANAGEMENT
+# ---------------------------------------
+
+@router.get(
+    "/users",
+    response_model=list[AdminUserResponse],
+)
+def list_users(
+    current_user: User = Depends(require_admin),
+    service: AdminUserService = Depends(
+        get_user_service,
+    ),
+):
+    return service.list_users()
+
+
+@router.patch(
+    "/users/{user_id}/role",
+    response_model=AdminUserResponse,
+)
+def update_user_role(
+    user_id: int,
+    payload: UpdateUserRoleRequest,
+    current_user: User = Depends(require_admin),
+    service: AdminUserService = Depends(
+        get_user_service,
+    ),
+):
+    return service.update_role(
+        user_id=user_id,
+        role=payload.role,
+    )
+
+
+@router.delete(
+    "/users/{user_id}",
+)
+def delete_user(
+    user_id: int,
+    current_user: User = Depends(require_admin),
+    service: AdminUserService = Depends(
+        get_user_service,
+    ),
+):
+    return service.delete_user(
+        user_id,
     )
